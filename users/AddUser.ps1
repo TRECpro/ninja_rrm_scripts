@@ -3,11 +3,12 @@
 # author: cfoellmann <foellmann@foe-services.de>
 #
 # name: Add User
-# description: Add a local user and set password to NEVER expire
+# description: Add a local user and set password to NEVER expire, set 'Admin' as 3rd parameter for Admin-creation
 # category: Users
 # language: PowerShell
 # OS: Windows
 # architecture: both
+# Parameters: <Username> <Password> (Admin)
 #
 # runas: System
 ##
@@ -28,7 +29,7 @@ if ($existing -eq $null) {
     Write-Host "Creating new local user $Username."
     & NET USER $Username $Password /add /y /expires:never
 
-    if ($Admin -ne $null) {
+    if ($Admin -eq 'Admin') {
         Write-Host "Adding local user $Username to $group."
         & NET LOCALGROUP $group $Username /add
     }
